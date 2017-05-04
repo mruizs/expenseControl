@@ -16,7 +16,7 @@ const userSchema = new Schema({
     lowercase: true,
     unique: true,
     required: [true, 'eMail field is required'],
-    validate: [ isEmail, 'invalid email']
+    validate: [ validator.isEmail, 'invalid email']
   },
   password: {
     type: String,
@@ -31,7 +31,7 @@ const userSchema = new Schema({
 
 userSchema.pre('save', (next) => {
   let user = this
-  if (!user.isModified('password')) return next()
+  //if (!user.isModified('password')) return next()
 
   bcrypt.genSalt(10, (err, salt) => {
     if (err) return next()
@@ -44,6 +44,7 @@ userSchema.pre('save', (next) => {
     })
   })
 })
+
 const User = mongoose.model('user', userSchema)
 
 module.exports = User

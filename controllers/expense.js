@@ -35,14 +35,16 @@ function getExpenses(req, res) {
 }
 
 function saveExpense(req, res) {
+
     let expense = new Exp()
 
     expense.name = req.body.name
+    expense.amount = req.body.amount
     expense.category = req.body.category
     expense.date = req.body.date
     expense.description = req.body.description
 
-    Exp.save((err, expenseStored) => {
+    expense.save((err, expenseStored) => {
         if (err) res.status(500).send({
             message: `Error when saving into the db: ${err}`
         })
